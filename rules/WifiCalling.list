@@ -12,6 +12,8 @@ DOMAIN-SUFFIX,entsrv-uk.vodafone.com
 DOMAIN-SUFFIX,vuk-gto.prod.ondemandconnectivity.com
 #Vodafone DE
 DOMAIN-SUFFIX,epdg.epc.mnc002.mcc262.pub.3gppnetwork.org
+#O2 DE
+DOMAIN-SUFFIX,epdg.epc.mnc007.mcc262.pub.3gppnetwork.org
 #T-Mobile,Helium
 DOMAIN-SUFFIX,ss.epdg.epc.geo.mnc260.mcc310.pub.3gppnetwork.org
 DOMAIN-SUFFIX,ss.epdg.epc.mnc260.mcc310.pub.3gppnetwork.org
