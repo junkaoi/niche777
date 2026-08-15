@@ -2,26 +2,7 @@
 # 全局配置 
 port: 7890
 allow-lan: true
-bind-address: "*"
-ipv6: false
-unified-delay: true
-tcp-concurrent: false
-log-level: info
-find-process-mode: 'off'
-#interface-name: en0
-global-client-fingerprint: chrome 
-keep-alive-idle: 600
-keep-alive-interval: 15
-profile:
-  store-selected: true
-  store-fake-ip: true
 
-# 控制面板
-external-controller: 0.0.0.0:9090
-secret: ""
-external-ui: ui
-external-ui-name: zashboard
-external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
 
 # 嗅探
 sniffer:
@@ -50,18 +31,7 @@ sniffer:
   force-dns-mapping: true
 
 
-# 入站
-tun:
-  enable: true
-  # system/gvisor/mixed
-  stack: mixed
-  dns-hijack: ["any:53", "tcp://any:53"]
-  #使用nikki，混入全部不修改的情况，开启接口指定为nikki
-  device: nikki
-  #使用仅内核自行修改下面三项为true
-  auto-route: true
-  auto-redirect: true
-  auto-detect-interface: true
+
 
 
 # DNS模块
