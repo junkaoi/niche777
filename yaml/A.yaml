@@ -1,1 +1,381 @@
 
+# 全局配置 
+port: 7890
+allow-lan: true
+bind-address: "*"
+ipv6: false
+unified-delay: true
+tcp-concurrent: false
+log-level: info
+find-process-mode: 'off'
+#interface-name: en0
+global-client-fingerprint: chrome 
+keep-alive-idle: 600
+keep-alive-interval: 15
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# 控制面板
+external-controller: 0.0.0.0:9090
+secret: ""
+external-ui: ui
+external-ui-name: zashboard
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+# 嗅探
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - "+.netflix.com"
+    - "+.nflxvideo.net"
+    - "+.amazonaws.com"
+    - "+.media.dssott.com"
+  skip-domain:
+    - "+.apple.com"
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - "+.oray.com"
+    - "+.sunlogin.net"
+    - "+.push.apple.com"
+  parse-pure-ip: true
+  force-dns-mapping: true
+
+
+# 入站
+tun:
+  enable: true
+  # system/gvisor/mixed
+  stack: mixed
+  dns-hijack: ["any:53", "tcp://any:53"]
+  #使用nikki，混入全部不修改的情况，开启接口指定为nikki
+  device: nikki
+  #使用仅内核自行修改下面三项为true
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+
+# DNS模块
+dns:
+  enable: true
+  cache-algorithm: arc
+  listen: 0.0.0.0:1053
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 28.0.0.1/8
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+  - "*.lan"
+  - "*.localdomain"
+  - "*.example"
+  - "*.invalid"
+  - "*.localhost"
+  - "*.test"
+  - "*.local"
+  - "*.home.arpa"
+  - time.*.com
+  - time.*.gov
+  - time.*.edu.cn
+  - time.*.apple.com
+  - time-ios.apple.com
+  - time1.*.com
+  - time2.*.com
+  - time3.*.com
+  - time4.*.com
+  - time5.*.com
+  - time6.*.com
+  - time7.*.com
+  - ntp.*.com
+  - ntp1.*.com
+  - ntp2.*.com
+  - ntp3.*.com
+  - ntp4.*.com
+  - ntp5.*.com
+  - ntp6.*.com
+  - ntp7.*.com
+  - "*.time.edu.cn"
+  - "*.ntp.org.cn"
+  - "+.pool.ntp.org"
+  - time1.cloud.tencent.com
+  - music.163.com
+  - "*.music.163.com"
+  - "*.126.net"
+  - musicapi.taihe.com
+  - music.taihe.com
+  - songsearch.kugou.com
+  - trackercdn.kugou.com
+  - "*.kuwo.cn"
+  - api-jooxtt.sanook.com
+  - api.joox.com
+  - joox.com
+  - y.qq.com
+  - "*.y.qq.com"
+  - streamoc.music.tc.qq.com
+  - mobileoc.music.tc.qq.com
+  - isure.stream.qqmusic.qq.com
+  - dl.stream.qqmusic.qq.com
+  - aqqmusic.tc.qq.com
+  - amobile.music.tc.qq.com
+  - "*.xiami.com"
+  - "*.music.migu.cn"
+  - music.migu.cn
+  - "+.msftconnecttest.com"
+  - "+.msftncsi.com"
+  - localhost.ptlogin2.qq.com
+  - localhost.sec.qq.com
+  - "+.qq.com"
+  - "+.tencent.com"
+  - "+.srv.nintendo.net"
+  - "*.n.n.srv.nintendo.net"
+  - "+.cdn.nintendo.net"
+  - "+.stun.playstation.net"
+  - xbox.*.*.microsoft.com
+  - "*.*.xboxlive.com"
+  - xbox.*.microsoft.com
+  - xnotify.xboxlive.com
+  - "+.battlenet.com.cn"
+  - "+.wotgame.cn"
+  - "+.wggames.cn"
+  - "+.wowsgame.cn"
+  - "+.wargaming.net"
+  - proxy.golang.org
+  - stun.*.*
+  - stun.*.*.*
+  - "+.stun.*.*"
+  - "+.stun.*.*.*"
+  - "+.stun.*.*.*.*"
+  - "+.stun.*.*.*.*.*"
+  - heartbeat.belkin.com
+  - "*.linksys.com"
+  - "*.linksyssmartwifi.com"
+  - "*.router.asus.com"
+  - mesu.apple.com
+  - swscan.apple.com
+  - swquery.apple.com
+  - swdownload.apple.com
+  - swcdn.apple.com
+  - swdist.apple.com
+  - lens.l.google.com
+  - stun.l.google.com
+  - na.b.g-tun.com
+  - "+.nflxvideo.net"
+  - "*.square-enix.com"
+  - "*.finalfantasyxiv.com"
+  - "*.ffxiv.com"
+  - "*.ff14.sdo.com"
+  - ff.dorado.sdo.com
+  - "*.mcdn.bilivideo.cn"
+  - "+.media.dssott.com"
+  - shark007.net
+  - Mijia Cloud
+  - "+.cmbchina.com"
+  - "+.cmbimg.com"
+  - local.adguard.org
+  - "+.sandai.net"
+  - "+.n0808.com"
+  - "+.uu.163.com"
+  - ps.res.netease.com
+  - "+.pub.3gppnetwork.org"
+  - geosite:category-games
+  default-nameserver:
+    - https://223.5.5.5/dns-query
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+
+hosts:
+  epdg.epc.mnc002.mcc262.pub.3gppnetwork.org: [139.7.117.168, 139.7.117.170]
+
+url-rewrite:
+  - ^https?:\/\/(www.)?(g|google)\.cn https://www.google.com 302
+  - ^https?:\/\/(ditu|maps).google\.cn https://maps.google.com 302
+
+
+# 出站策略
+# 注意锚点必须放在引用的上方，可以集中把锚点全部放yaml的顶部。
+pr: &pr {type: select, proxies: [ 全部节点, 🇭🇰 香港节点, 🇹🇼 台湾节点, 🇯🇵 日本节点, 🇬🇧 英国节点, 🇰🇷 韩国节点, 🇸🇬 新加坡节点, 🇺🇲 美国节点, 🇩🇪 德国节点,  全球直连]}
+proxy-groups:
+  - {name:  全部节点, type: select, include-all: true, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/all.png"}
+  - {name:  漏网之鱼, <<: *pr, icon: "https://www.svgrepo.com/show/39069/fishing-fish.svg"}
+  - {name:  游戏节点, <<: *pr, include-all: true, filter: "(?i)游戏|game", icon: "https://www.svgrepo.com/show/494393/game-competition.svg"}
+  - {name:  YouTube, <<: *pr, icon: "https://www.svgrepo.com/show/448261/youtube.svg"}
+  - {name:  哔哩哔哩, <<: *pr, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/bilibili.png"}
+  - {name:  Bybit-Binance, <<: *pr, icon: "https://cdn-icons-png.flaticon.com/128/5968/5968260.png"}
+  - {name:  巴哈姆特, <<: *pr, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/bahamut.png"}
+  - {name:  Ai平台, <<: *pr, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/ai.png"}
+  - {name:  Google, <<: *pr, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/google.png"}
+  - {name:  AppleAPNs, <<: *pr, icon: "https://www.svgrepo.com/show/503170/apple.svg"}
+  - {name:  Apple服务, <<: *pr, icon: "https://www.svgrepo.com/show/503170/apple.svg"}
+  - {name:  Microsoft, <<: *pr, icon: "https://www.svgrepo.com/show/448239/microsoft.svg"}
+  - {name:  Telegram, <<: *pr, icon: "https://www.svgrepo.com/show/452115/telegram.svg"}
+  - {name:  WifiCalling, <<: *pr, icon: "https://www.svgrepo.com/show/456715/wifi-call.svg"}
+  - {name:  游戏平台, <<: *pr, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/game.png"}
+  - {name:  NETFLIX, <<: *pr, icon: "https://www.svgrepo.com/show/354109/netflix-icon.svg"}
+  - {name:  国内媒体, <<: *pr, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/Chinese_media.png"}
+  - {name:  国外媒体, <<: *pr, icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/global_media.png"}
+  - {name:  小红书, <<: *pr, icon: "https://files.brandlogos.net/svg/6pHg9QdYGc/Xiaohongshu-OQLB1Y4HE_brandlogos.net.svg"}
+  - {name:  全球直连, type: select, proxies: [DIRECT,  全部节点], icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/direct.png"}
+
+
+#节点组
+  - {name: 🇭🇰 香港节点, type: select, proxies: [♻️ 香港自动, 🔯 香港故转], include-all: true, filter: "(?i)港|hk|hongkong|hong kong", icon: "https://www.svgrepo.com/show/401631/flag-for-hong-kong-sar-china.svg"}
+  - {name: 🇹🇼 台湾节点, type: select, proxies: [♻️ 台湾自动, 🔯 台湾故转], include-all: true, filter: "(?i)台|tw|taiwan", icon: "https://www.svgrepo.com/show/401771/flag-for-taiwan.svg"}
+  - {name: 🇯🇵 日本节点, type: select, proxies: [♻️ 日本自动, 🔯 日本故转], include-all: true, filter: "(?i)日本|jp|japan", icon: "https://www.svgrepo.com/show/242294/japan.svg"}
+  - {name: 🇺🇲 美国节点, type: select, proxies: [♻️ 美国自动, 🔯 美国故转], include-all: true, filter: "(?i)美国|us|united ?states|america", icon: "https://www.svgrepo.com/show/242307/united-states-of-america-united-states.svg"}
+  - {name: 🇸🇬 新加坡节点, type: select, proxies: [♻️ 新加坡自动, 🔯 新加坡故转], include-all: true, filter: "(?i)新加坡|sg|singapore", icon: "https://www.svgrepo.com/show/401744/flag-for-singapore.svg"}
+  - {name: 🇰🇷 韩国节点, type: select, proxies: [♻️ 韩国自动, 🔯 韩国故转], include-all: true, filter: "(?i)韩|kr|korea", icon: "https://www.svgrepo.com/show/401752/flag-for-south-korea.svg"}
+  - {name: 🇬🇧 英国节点, type: select, proxies: [♻️ 英国自动, 🔯 英国故转], include-all: true, filter: "(?i)英|uk|gb|united kingdom|britain", icon: "https://www.svgrepo.com/show/401788/flag-for-united-kingdom.svg"}
+  - {name: 🇩🇪 德国节点, type: select, proxies: [♻️ 德国自动, 🔯 德国故转], include-all: true, filter: "(?i)德国|de|germany|deutsch", icon: "https://www.svgrepo.com/show/401612/flag-for-germany.svg"}
+
+  # 自动组
+  - {name: ♻️ 香港自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^(?=.*宜)(?=.*((?i)(港|hk|hongkong|hong kong))).*$", exclude-filter: "(?i)(台|日|韩|新|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: ♻️ 台湾自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^(?=.*宜)(?=.*((?i)(台|tw|taiwan))).*$", exclude-filter: "(?i)(港|日|韩|新|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: ♻️ 日本自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^(?=.*宜)(?=.*((?i)(日本|jp|japan))).*$", exclude-filter: "(?i)(港|台|韩|新|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: ♻️ 美国自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^(?=.*宜)(?=.*((?i)(美国|us|united ?states|america))).*$", exclude-filter: "(?i)(港|台|日|韩|新|深|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: ♻️ 新加坡自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^(?=.*宜)(?=.*((?i)(新加坡|sg|singapore))).*$", exclude-filter: "(?i)(港|台|日|韩|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: ♻️ 韩国自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^(?=.*宜)(?=.*((?i)(韩|kr|korea))).*$", exclude-filter: "(?i)(港|台|日|新|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: ♻️ 英国自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^(?=.*宜)(?=.*((?i)(英|uk|gb|united kingdom|britain))).*$", exclude-filter: "(?i)(港|台|日|韩|新|深|美|德|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: ♻️ 德国自动, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^(?=.*宜)(?=.*((?i)(德国|de|germany|deutsch))).*$", exclude-filter: "(?i)(港|台|日|韩|新|深|美|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+
+  # 故转组
+  - {name: 🔯 香港故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?i)(港|hk|hongkong|hong kong)", exclude-filter: "(?i)(台|日|韩|新|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: 🔯 台湾故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?i)(台|tw|taiwan)", exclude-filter: "(?i)(港|日|韩|新|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: 🔯 日本故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?i)(日本|jp|japan)", exclude-filter: "(?i)(港|台|韩|新|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: 🔯 美国故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?i)(美国|us|united ?states|america)", exclude-filter: "(?i)(港|台|日|韩|新|深|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: 🔯 新加坡故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?i)(新加坡|sg|singapore)", exclude-filter: "(?i)(港|台|日|韩|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: 🔯 韩国故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?i)(韩|kr|korea)", exclude-filter: "(?i)(港|台|日|新|深|美|德|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: 🔯 英国故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?i)(英|uk|gb|united kingdom|britain)", exclude-filter: "(?i)(港|台|日|韩|新|深|美|德|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+  - {name: 🔯 德国故转, type: fallback, include-all: true, tolerance: 20, interval: 300, filter: "(?i)(德国|de|germany|deutsch)", exclude-filter: "(?i)(港|台|日|韩|新|深|美|英|x3|x5|x7|x10|x100|3x|5x|7x|10x|100x|3倍|5倍|7倍|10倍|100倍)"}
+
+
+# 规则匹配
+
+rules:
+
+
+  - DOMAIN-SUFFIX,i5.cn, REJECT
+  - DOMAIN-SUFFIX,i4.cn, REJECT
+
+# Trading212
+  - RULE-SET,Trading212, 🇩🇪 德国节点
+#  WifiCalling需要节点支持UDP,端口500,4500,双卡连接稳定需要节点支持FullCone NAT,(Vmess,Vless节点开启XUDP)
+  - RULE-SET,WifiCalling, WifiCalling
+
+  - RULE-SET,Bybit, Bybit-Binance
+  - RULE-SET,Binance, Bybit-Binance
+
+  - DOMAIN-SUFFIX,bc.googleusercontent.com, 游戏节点  #Project Seikai
+  - IP-CIDR,8.208.0.0/12, 游戏节点,no-resolve  #原神
+
+  #PikPak下载
+  - DOMAIN-KEYWORD,dl-z01a-, 全球直连
+  - DOMAIN-KEYWORD,dl-a10b-, 全球直连
+  - DOMAIN-SUFFIX,dl.pikpak.io, 全球直连
+
+  - DOMAIN-SUFFIX,myqcloud.com, 全部节点
+  - DOMAIN-SUFFIX,applovin.com,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,unity3d.com,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,pangle.io,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,i18n-pglstatp.com,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,inner-active.mobi,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,doubleverify.com,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,tapestry.tapad.com,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,inmobicdn.net,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,inmobi.com,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,dsp.youappi.com,🇯🇵 日本节点
+  - DOMAIN-SUFFIX,cached-ad-b.fyber.com,🇯🇵 日本节点
+
+  - DOMAIN-SUFFIX,o2online.de,🇩🇪 德国节点
+  - DOMAIN-SUFFIX,bonify.de, 🇩🇪 德国节点
+
+  - RULE-SET,lan, 全球直连
+  - RULE-SET,unban, 全球直连
+  - RULE-SET,youtube, YouTube
+  - RULE-SET,googlefcm, Google
+  - RULE-SET,googlecn, 全球直连
+  - RULE-SET,Google, Google
+  - RULE-SET,steamcn, 全球直连
+  - RULE-SET,bing, Microsoft
+  - RULE-SET,onedrive, Microsoft
+  - RULE-SET,microsoft, Microsoft
+  - RULE-SET,AppleApns, AppleAPNs
+  - RULE-SET,apple, Apple服务
+  - RULE-SET,telegram, Telegram
+  - RULE-SET,ai, Ai平台
+  - RULE-SET,openai, Ai平台
+  - RULE-SET,epic, 游戏平台
+  - RULE-SET,origin, 游戏平台
+  - RULE-SET,sony, 游戏平台
+  - RULE-SET,steam, 游戏平台
+  - RULE-SET,nintendo, 游戏平台
+  - RULE-SET,netflix, NETFLIX
+  - RULE-SET,bahamut, 巴哈姆特
+  - RULE-SET,bilibilihmt, 哔哩哔哩
+  - RULE-SET,bilibili, 哔哩哔哩
+  - RULE-SET,chinamedia, 国内媒体
+  - RULE-SET,proxymedia, 国外媒体
+  - DOMAIN-SUFFIX,xiaohongshu.com, 小红书
+  - DOMAIN-SUFFIX,xhscdn.com, 小红书
+  - DOMAIN-SUFFIX,xhscdn.net, 小红书
+  - DOMAIN-SUFFIX,fengkongcloud.com, 小红书
+  - RULE-SET,proxygfw, 全部节点
+  - RULE-SET,chinadomain, 全球直连
+  - RULE-SET,chinacompanyip, 全球直连
+  - RULE-SET,download, 全球直连
+  - GEOIP,CN, 全球直连
+  - MATCH, 漏网之鱼
+
+# 规则集
+rule-anchor:
+ _classical: &classical {type: http, interval: 86400, behavior: classical, format: text}
+
+rule-providers: 
+  lan: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/LocalAreaNetwork.list }
+  unban: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list }
+  banad: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list }
+  banprogramad: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list }
+  googlefcm: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/GoogleFCM.list }
+  googlecn: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list }
+  steamcn: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/SteamCN.list }
+  bing: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Bing.list }
+  onedrive: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/OneDrive.list }
+  microsoft: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Microsoft.list }
+  apple: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Apple.list }
+  telegram: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list }
+  ai: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/AI.list }
+  openai: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/OpenAi.list }
+  epic: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Epic.list }
+  origin: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Origin.list }
+  sony: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Sony.list }
+  steam: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Steam.list }
+  nintendo: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Nintendo.list }
+  youtube: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/YouTube.list }
+  netflix: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Netflix.list }
+  bahamut: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Bahamut.list }
+  bilibilihmt: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/BilibiliHMT.list }
+  bilibili: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/Bilibili.list }
+  chinamedia: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaMedia.list }
+  proxymedia: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyMedia.list }
+  proxygfw: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list }
+  chinadomain: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list }
+  chinacompanyip: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list }
+  download: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list }
+#自定
+  Bybit: { <<: *classical, url: https://raw.githubusercontent.com/junkaoi/niche777/refs/heads/main/rules/Bybit.list }
+  Binance: { <<: *classical, url: https://raw.githubusercontent.com/junkaoi/niche777/refs/heads/main/rules/Binance.list }
+  Trading212: { <<: *classical, url: https://raw.githubusercontent.com/junkaoi/niche777/refs/heads/main/rules/Trading212.list }
+  WifiCalling: { <<: *classical, url: https://raw.githubusercontent.com/junkaoi/niche777/refs/heads/main/rules/WifiCalling.list }
+  Google: { <<: *classical, url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/refs/heads/master/Clash/Ruleset/Google.list }
+  AppleApns: { <<: *classical, url: https://raw.githubusercontent.com/junkaoi/niche777/refs/heads/main/rules/AppleApns.list }
