@@ -1,0 +1,6 @@
+payload:
+  - DOMAIN-SUFFIX,monzo.com
+  - DOMAIN-SUFFIX,monzo-alt.net
+  - DOMAIN,streaming-rekognition.eu-west-1.amazonaws.com
+  - DOMAIN,monzo.statuspage.io
+  - DOMAIN-KEYWORD,monzo
